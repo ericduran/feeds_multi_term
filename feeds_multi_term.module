@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Implements hook_feeds_processor_targets_alter().
+ */
+function feeds_multi_term_feeds_processor_targets_alter(&$targets, $entity_type, $bundle_name) {
+  foreach (field_info_instances($entity_type, $bundle_name) as $name => $instance) {
+    $info = field_info_field($name);
+    if ($info['type'] == 'taxonomy_term_reference') {
+      $targets['feeds_multi_term_' . $name] = array(
+        'name' => "Multi: " . $instance['label'],
+        'callback' => 'feeds_multi_term_set_target',
+        'description' => t('The @label field of the node.', array('@label' => $instance['label'])),
+      );
+    }
+  }
+}
+
+
+/**
+ * Callback for mapping. Here is where the actual mapping happens.
+ *
+ * @todo Do not create new terms for non-autotag fields.
+ */
+function feeds_multi_term_set_target($source, $entity, $target, $terms) {
+  $target = str_replace("feeds_multi_term_", '', $target);
+  if (empty($terms)) {
+    return;
+  }
+
+  if ($terms = explode("|", $terms)) {
+    taxonomy_feeds_set_target($source, $entity, $target, $terms);
+  }
+}

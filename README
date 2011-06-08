@@ -1,0 +1,11 @@
+This is a very Basic Multi Term Imported for Feeds.
+
+In order to import multiple taxonomy terms you will need to use "Multi: " field name Target.
+This option can be selected when in the Feeds Mapping page.
+
+You terms will need to be separated by "|". An example of a valid multi term csv file is below:
+
+"title", "terms"
+"This is my 1st Article", "Cat 1|Cat2"
+"This is my 2nd Article", "Cat 1|Cat3"
+"This is my 3rd Article", "Cat 2"

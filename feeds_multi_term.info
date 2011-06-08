@@ -1,0 +1,5 @@
+name = Feeds Multiple Terms
+description = Import Multiple Terms via feeds
+core = 7.x
+dependencies[] = feeds
+package = Feeds
